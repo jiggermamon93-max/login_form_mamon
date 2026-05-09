@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 25%, #2d5a8c 50%, #1e3a5f 75%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%), 
+                        radial-gradient(circle at 80% 80%, rgba(147, 51, 234, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 420px;
+            padding: 0 20px;
+        }
+
+        .login-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header-text h1 {
+            margin: 0 0 0.5rem;
+            font-size: 26px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .header-text p {
+            margin: 0;
+            font-size: 14px;
+            color: rgba(226, 232, 240, 0.6);
+        }
+
+        .header-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            font-size: 24px;
+            color: white;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(226, 232, 240, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            padding: 12px 16px;
+            background: rgba(71, 85, 105, 0.3);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            font-size: 14px;
+            color: white;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder,
+        input[type="email"]::placeholder {
+            color: rgba(148, 163, 184, 0.4);
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus {
+            border-color: rgba(59, 130, 246, 0.8);
+            background: rgba(71, 85, 105, 0.5);
+        }
+
+        input[type="text"]:-webkit-autofill,
+        input[type="password"]:-webkit-autofill,
+        input[type="email"]:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px rgba(71, 85, 105, 0.3) inset !important;
+            -webkit-text-fill-color: white !important;
+        }
+
+        .password-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-container input {
+            width: 100%;
+            padding-right: 44px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: rgba(148, 163, 184, 0.6);
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+            font-size: 19px;
+        }
+
+        .toggle-password:hover {
+            color: rgba(226, 232, 240, 0.9);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #3b82f6;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            text-transform: none;
+            letter-spacing: normal;
+            font-size: 13px;
+            color: rgba(226, 232, 240, 0.7);
+            cursor: pointer;
+        }
+
+        .login-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 12px;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            display: none;
+            animation: spin 1s linear infinite;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .message {
+            margin-top: 1.5rem;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+            font-weight: 500;
+            animation: slideDown 0.3s ease;
+        }
+
+        .message.success {
+            background: rgba(34, 197, 94, 0.15);
+            color: rgba(134, 239, 172, 0.9);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: rgba(252, 165, 165, 0.9);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .attempt-display {
+            margin-top: 1.5rem;
+            font-size: 13px;
+            text-align: center;
+            color: rgba(148, 163, 184, 0.7);
+        }
+
+        .footer-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 10px;
+            background: rgba(71, 85, 105, 0.4);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 10px;
+            color: rgba(226, 232, 240, 0.7);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .social-btn:hover {
+            background: rgba(71, 85, 105, 0.6);
+            color: rgba(226, 232, 240, 0.9);
+        }
+
+        .signup-text {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 12px;
+            color: rgba(148, 163, 184, 0.5);
+        }
+
+        .signup-text a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .signup-text a:hover {
+            color: #60a5fa;
+        }
+
+        .footer-links {
+            text-align: center;
+            font-size: 11px;
+            color: rgba(148, 163, 184, 0.4);
+        }
+
+        .footer-links a {
+            color: rgba(148, 163, 184, 0.5);
+            text-decoration: none;
+            transition: color 0.3s;
+            margin: 0 8px;
+        }
+
+        .footer-links a:hover {
+            color: rgba(148, 163, 184, 0.7);
+        }
+
+        .theme-toggle-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .theme-toggle {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            cursor: pointer;
+            color: rgba(226, 232, 240, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            margin: 0 auto;
+            font-size: 20px;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(30, 41, 59, 0.8);
+            color: rgba(226, 232, 240, 0.9);
+        }
+
+        .theme-label {
+            font-size: 11px;
+            color: rgba(148, 163, 184, 0.4);
+            margin-top: 8px;
+        }
+
+        /* Light Theme */
+        body.light-theme {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%, #f8fafc 100%);
+        }
+
+        .light-theme .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(51, 65, 85, 0.1);
+        }
+
+        .light-theme input[type="text"],
+        .light-theme input[type="password"],
+        .light-theme input[type="email"] {
+            background: rgba(15, 23, 42, 0.05);
+            border-color: rgba(51, 65, 85, 0.15);
+            color: #0f172a;
+        }
+
+        .light-theme input[type="text"]::placeholder,
+        .light-theme input[type="password"]::placeholder,
+        .light-theme input[type="email"]::placeholder {
+            color: rgba(51, 65, 85, 0.3);
+        }
+
+        .light-theme input[type="text"]:focus,
+        .light-theme input[type="password"]:focus,
+        .light-theme input[type="email"]:focus {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(15, 23, 42, 0.08);
+        }
+
+        .light-theme label,
+        .light-theme .header-text h1 {
+            color: #0f172a;
+        }
+
+        .light-theme .header-text p,
+        .light-theme .signup-text {
+            color: rgba(51, 65, 85, 0.7);
+        }
+
+        .light-theme .social-btn {
+            background: rgba(51, 65, 85, 0.08);
+            border-color: rgba(51, 65, 85, 0.15);
+            color: #0f172a;
+        }
+
+        .light-theme .social-btn:hover {
+            background: rgba(51, 65, 85, 0.15);
+        }
+
+        .light-theme .theme-toggle {
+            background: rgba(51, 65, 85, 0.1);
+            color: #0f172a;
+        }
+
+        .light-theme .login-btn {
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .header-text h1 {
+                font-size: 22px;
+            }
+
+            .social-buttons {
+                gap: 8px;
+            }
+
+            .social-btn {
+                font-size: 11px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <div class="header">
+                <div class="header-text">
+                    <h1>Student Portal</h1>
+                    <p>Access your academic dashboard</p>
+                </div>
+                <div class="header-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="form-group">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="password-container">
+                        <input type="password" id="password" placeholder="Enter your password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Remember me on this device</label>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span>Login</span>
+                    <div class="spinner" id="spinner"></div>
+                </button>
+            </form>
+
+            <div class="message" id="message"></div>
+            <div class="attempt-display" id="attemptDisplay"></div>
+
+            <div class="footer-section">
+                <div class="social-buttons">
+                    <button type="button" class="social-btn" onclick="openSocial('Google')">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="social-btn" onclick="openSocial('Microsoft')">
+                        <i class="fab fa-microsoft"></i> Microsoft
+                    </button>
+                </div>
+
+                <div class="signup-text">
+                    Don't have an account? <a onclick="toggleCreateAccount(event)">Create one</a>
+                </div>
+
+                <div class="footer-links">
+                    <a href="#" onclick="handleForgotPassword(event)">Forgot password?</a> |
+                    <a href="#" onclick="handleContactSupport(event)">Contact Support</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="theme-toggle-container">
+            <button type="button" class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                <i class="fas fa-sun" id="themeIcon"></i>
+            </button>
+            <p class="theme-label">Toggle theme</p>
+        </div>
+    </div>
+
+    <script>
+        const users = [
+            { username: "Jigger", password: "2004" },
+            { username: "student1", password: "1111" },
+            { username: "student2", password: "2222" }
+        ];
+
+        let attemptsLeft = 3;
+        let isLocked = false;
+        let passwordVisible = false;
+        let isLightTheme = false;
+
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const eyeIcon = document.getElementById("eyeIcon");
+
+            passwordVisible = !passwordVisible;
+
+            if (passwordVisible) {
+                passwordInput.type = "text";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            }
+        }
+
+        function updateAttemptDisplay() {
+            const display = document.getElementById("attemptDisplay");
+            if (isLocked) {
+                display.innerHTML = "🔒 Account Locked - Contact Support";
+                display.style.color = "rgba(239, 68, 68, 0.8)";
+            } else if (attemptsLeft < 3) {
+                display.innerHTML = `Attempts remaining: ${attemptsLeft}`;
+                display.style.color = "rgba(248, 113, 113, 0.8)";
+            } else {
+                display.innerHTML = "";
+            }
+        }
+
+        function showMessage(text, isSuccess) {
+            const msg = document.getElementById("message");
+            msg.innerHTML = text;
+            msg.style.display = "block";
+
+            msg.classList.remove("success", "error");
+            msg.classList.add(isSuccess ? "success" : "error");
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+
+            if (isLocked) {
+                showMessage("Account locked. Please contact support.", false);
+                return;
+            }
+
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            if (!username || !password) {
+                showMessage("Please enter username and password", false);
+                return;
+            }
+
+            const loginBtn = document.getElementById("loginBtn");
+            const spinner = document.getElementById("spinner");
+
+            loginBtn.disabled = true;
+            spinner.style.display = "block";
+
+            setTimeout(() => {
+                const validUser = users.find(u => u.username === username && u.password === password);
+
+                if (validUser) {
+                    showMessage(`Welcome back, ${username}! 🎉`, true);
+                    if (document.getElementById("rememberMe").checked) {
+                        localStorage.setItem("rememberedUser", username);
+                    }
+                    attemptsLeft = 3;
+                    setTimeout(() => {
+                        document.getElementById("username").value = "";
+                        document.getElementById("password").value = "";
+                    }, 1500);
+                } else {
+                    attemptsLeft--;
+                    if (attemptsLeft <= 0) {
+                        isLocked = true;
+                        showMessage("Too many failed attempts. Account locked.", false);
+                        loginBtn.disabled = true;
+                        loginBtn.style.opacity = "0.6";
+                        loginBtn.style.cursor = "not-allowed";
+                    } else {
+                        showMessage(`Invalid credentials. ${attemptsLeft} attempt${attemptsLeft !== 1 ? 's' : ''} remaining.`, false);
+                    }
+                }
+
+                loginBtn.disabled = false;
+                spinner.style.display = "none";
+                updateAttemptDisplay();
+            }, 1500);
+        }
+
+        function openSocial(provider) {
+            showMessage(`${provider} login coming soon...`, true);
+        }
+
+        function toggleCreateAccount(e) {
+            e.preventDefault();
+            showMessage("Account creation page would open here", true);
+        }
+
+        function handleForgotPassword(e) {
+            e.preventDefault();
+            showMessage("Password reset email would be sent", true);
+        }
+
+        function handleContactSupport(e) {
+            e.preventDefault();
+            showMessage("Contacting IT Support...", true);
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById("themeIcon");
+            isLightTheme = !isLightTheme;
+
+            if (isLightTheme) {
+                body.classList.add("light-theme");
+                themeIcon.classList.remove("fa-sun");
+                themeIcon.classList.add("fa-moon");
+            } else {
+                body.classList.remove("light-theme");
+                themeIcon.classList.remove("fa-moon");
+                themeIcon.classList.add("fa-sun");
+            }
+        }
+
+        updateAttemptDisplay();
+
+        const rememberedUser = localStorage.getItem("rememberedUser");
+        if (rememberedUser) {
+            document.getElementById("username").value = rememberedUser;
+            document.getElementById("rememberMe").checked = true;
+        }
+    </script>
+</body>
+</html>
